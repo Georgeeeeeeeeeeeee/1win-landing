@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1win Україна — Офіційний сайт, реєстрація та бонус 500%</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="description"
         content="Офіційний сайт 1win в Україні. Реєстрація, вітальний бонус 500%, кешбек до 30% та швидкі виплати.">
     <link rel="stylesheet" href="style.css">
@@ -60,31 +63,12 @@
         <div class="container">
             <h2 class="section-title">Прямо зараз виграють</h2>
             <div class="live-wins-wrapper">
-                <div class="live-wins-list">
+                <div class="live-wins-list" id="dynamic-live-wins">
+                    <!-- Буде згенеровано динамічно -->
                     <div class="win-item">
                         <span class="win-user">Vovan_77</span>
                         <span class="win-amount">3 452 UAH</span>
                         <span class="win-game">Aviator</span>
-                    </div>
-                    <div class="win-item">
-                        <span class="win-user">Krasava</span>
-                        <span class="win-amount">12 700 UAH</span>
-                        <span class="win-game">Lucky Jet</span>
-                    </div>
-                    <div class="win-item">
-                        <span class="win-user">mister_X</span>
-                        <span class="win-amount">890 UAH</span>
-                        <span class="win-game">Sugar Rush</span>
-                    </div>
-                    <div class="win-item">
-                        <span class="win-user">OlegUA</span>
-                        <span class="win-amount">28 350 UAH</span>
-                        <span class="win-game">Gates of Olympus</span>
-                    </div>
-                    <div class="win-item">
-                        <span class="win-user">Pobeditel2026</span>
-                        <span class="win-amount">7 420 UAH</span>
-                        <span class="win-game">Plinko</span>
                     </div>
                 </div>
             </div>
@@ -340,7 +324,7 @@
         };
 
         const startAutoPlay = () => {
-            intervalId = setInterval(() => changeInfluencer(), 3500); // 3.5 секунди
+            intervalId = setInterval(() => changeInfluencer(), 3000); // 3 секунди
         };
 
         if (infCard && infImg && infName && infText) {
@@ -378,6 +362,43 @@
                 }
             }, {passive: true});
         }
+
+        // Динамічні Виграші
+        const liveWinsNames = [
+            "Maks_Vip", "Olexandr_UA", "Lucky_Guy", "Vovan_77", "Krasava", 
+            "mister_X", "OlegUA", "Pobeditel2026", "Tanya_Win", "Ihor_Pro", 
+            "Nazar88", "Denys_King", "Gamer_UA", "Champion1", "SuperVlad",
+            "Artem_Cash", "Bohdan_Bet", "Zheka777", "Stepan_M", "Andriy_Top",
+            "Katya_K", "Oksana_Luck", "Serhiy_V", "Dima_Start", "Rich_Boy",
+            "Money_Maker", "Slot_Master", "Casino_King", "Win_Hunter", "Big_Boss",
+            "Vip_Player", "Lucky_Strike", "Jackpot_UA", "Crypto_Fan"
+        ];
+        const liveWinsGames = ["Aviator", "Lucky Jet", "Gates of Olympus", "Sugar Rush", "Plinko", "Sweet Bonanza", "Speed-n-Cash"];
+        
+        const generateLiveWins = () => {
+             const container = document.getElementById('dynamic-live-wins');
+             if (!container) return;
+             
+             container.innerHTML = '';
+             for (let i = 0; i < 5; i++) {
+                 const name = liveWinsNames[Math.floor(Math.random() * liveWinsNames.length)];
+                 const game = liveWinsGames[Math.floor(Math.random() * liveWinsGames.length)];
+                 const amount = Math.floor(Math.random() * (50000 - 450 + 1)) + 450;
+                 const formattedAmount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " UAH";
+                 
+                 const item = document.createElement('div');
+                 item.className = 'win-item';
+                 item.innerHTML = `
+                     <span class="win-user">${name}</span>
+                     <span class="win-amount">${formattedAmount}</span>
+                     <span class="win-game">${game}</span>
+                 `;
+                 container.appendChild(item);
+             }
+        };
+
+        generateLiveWins();
+        setInterval(generateLiveWins, 7200000); // Кожні 2 години
     </script>
 </body>
 

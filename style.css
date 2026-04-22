@@ -320,7 +320,32 @@ h2.section-title {
     max-width: 700px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.02);
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.influencer-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.influencer-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.influencer-dot:hover {
+    background-color: #555;
+}
+
+.influencer-dot.active {
+    background-color: var(--accent-blue);
+    transform: scale(1.2);
 }
 
 .expert-img {

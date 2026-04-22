@@ -107,6 +107,7 @@
                     </div>
                 </div>
             </div>
+            <div class="influencer-dots" id="influencer-dots"></div>
         </div>
     </section>
 
@@ -299,28 +300,83 @@
             { name: "Михайло Лебіга", text: "«Ти навіть не уявляєш, які тут бонуси. Залітай, поки гаряче!»", img: "lebiha.jpg" }
         ];
 
-        let currentInfluencer = 0;
+        let currentInfluencer = Math.floor(Math.random() * influencers.length);
         const infCard = document.getElementById('influencer-card');
         const infImg = document.getElementById('influencer-img');
         const infName = document.getElementById('influencer-name');
         const infText = document.getElementById('influencer-text');
+        const infDots = document.getElementById('influencer-dots');
+        
+        let intervalId;
+
+        const updateUI = () => {
+            const data = influencers[currentInfluencer];
+            infImg.src = data.img;
+            infImg.alt = data.name;
+            infName.textContent = data.name;
+            infText.textContent = data.text;
+            
+            if (infDots) {
+                Array.from(infDots.children).forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentInfluencer);
+                });
+            }
+        };
+
+        const changeInfluencer = (index = -1) => {
+            clearInterval(intervalId);
+            infCard.style.opacity = '0';
+            
+            setTimeout(() => {
+                if (index === -1) {
+                    currentInfluencer = (currentInfluencer + 1) % influencers.length;
+                } else {
+                    currentInfluencer = index;
+                }
+                updateUI();
+                infCard.style.opacity = '1';
+                startAutoPlay();
+            }, 400); // Плавність зникнення 400мс
+        };
+
+        const startAutoPlay = () => {
+            intervalId = setInterval(() => changeInfluencer(), 3500); // 3.5 секунди
+        };
 
         if (infCard && infImg && infName && infText) {
-            setInterval(() => {
-                infCard.style.opacity = '0';
-                
-                setTimeout(() => {
-                    currentInfluencer = (currentInfluencer + 1) % influencers.length;
-                    const data = influencers[currentInfluencer];
-                    
-                    infImg.src = data.img;
-                    infImg.alt = data.name;
-                    infName.textContent = data.name;
-                    infText.textContent = data.text;
-                    
-                    infCard.style.opacity = '1';
-                }, 500); // 500ms на CSS перехід
-            }, 5000); 
+            // Ініціалізація точок
+            if (infDots) {
+                influencers.forEach((_, idx) => {
+                    const dot = document.createElement('div');
+                    dot.className = 'influencer-dot';
+                    dot.addEventListener('click', () => changeInfluencer(idx));
+                    infDots.appendChild(dot);
+                });
+            }
+
+            // Старт
+            updateUI();
+            startAutoPlay();
+
+            // Свайп для мобільних
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            infCard.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+                clearInterval(intervalId);
+            }, {passive: true});
+            
+            infCard.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                if (touchEndX < touchStartX - 40) {
+                    changeInfluencer((currentInfluencer + 1) % influencers.length);
+                } else if (touchEndX > touchStartX + 40) {
+                    changeInfluencer((currentInfluencer - 1 + influencers.length) % influencers.length);
+                } else {
+                    startAutoPlay();
+                }
+            }, {passive: true});
         }
     </script>
 </body>

@@ -18,6 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(el);
     });
 
+    let ticking = false;
+    const applyParallax = () => {
+        document.body.style.setProperty("--parallax-offset", String(window.scrollY));
+        ticking = false;
+    };
+    window.addEventListener("scroll", () => {
+        if (!ticking) {
+            requestAnimationFrame(applyParallax);
+            ticking = true;
+        }
+    }, { passive: true });
+    applyParallax();
+
     document.querySelectorAll(".faq-question").forEach((item) => {
         item.addEventListener("click", () => {
             const parent = item.parentElement;
@@ -91,13 +104,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const influencers = [
-        { name: "Зубарев", text: "«На 1win все четко: зашел, активировал бонус и сразу в игру.»", img: "zubarev.jpg", proof: "Выбор Зубарева" },
-        { name: "Потеря", text: "«1win дает скорость, удобство и стабильный результат каждый день.»", img: "ptieria.jpg", proof: "Рекомендация Потери" },
-        { name: "Лебига", text: "«На 1win реально горячие бонусы. Заходишь и сразу чувствуешь драйв.»", img: "lebiha.jpg", proof: "Рекомендация Лебиги" },
-        { name: "Богачук", text: "«Точность и дисциплина решают. На 1win это работает на максимум.»", img: "bohachuk.jpg", proof: "Выбор Богачука" },
-        { name: "Слобоженко", text: "«1win — мой выбор: быстрые выплаты, мощные бонусы и надежная платформа.»", img: "slobodzhenko.jpg", proof: "Выбор Слобоженко" },
-        { name: "Беринчик", text: "«В 1win все по-бойцовски: темп, азарт и большие возможности.»", img: "berinchyk.jpg", proof: "Рекомендация Беринчика" },
-        { name: "Амосов", text: "«В спорте и на 1win побеждает тот, кто держит фокус до конца.»", img: "amosov.jpg", proof: "Выбор Амосова" }
+        { name: "Зубарєв", text: "«На 1win все чітко: зайшов, активував бонус і одразу в гру.»", img: "zubarev.jpg", proof: "Вибір Зубарєва" },
+        { name: "Потеря", text: "«1win дає швидкість, зручність і стабільний результат щодня.»", img: "ptieria.jpg", proof: "Рекомендація Потері" },
+        { name: "Лебіга", text: "«На 1win реально гарячі бонуси. Заходиш і одразу відчуваєш драйв.»", img: "lebiha.jpg", proof: "Рекомендація Лебіги" },
+        { name: "Богачук", text: "«Точність і дисципліна вирішують. На 1win це працює на максимум.»", img: "bohachuk.jpg", proof: "Вибір Богачука" },
+        { name: "Слобоженко", text: "«1win — мій вибір: швидкі виплати, потужні бонуси та надійна платформа.»", img: "slobodzhenko.jpg", proof: "Вибір Слобоженка" },
+        { name: "Берінчик", text: "«У 1win усе по-бійцівськи: темп, азарт і великі можливості.»", img: "berinchyk.jpg", proof: "Рекомендація Берінчика" },
+        { name: "Амосов", text: "«У спорті та на 1win перемагає той, хто тримає фокус до кінця.»", img: "amosov.jpg", proof: "Вибір Амосова" }
     ];
 
     const infCard = document.getElementById("influencer-card");
@@ -193,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const game = feedGames[Math.floor(Math.random() * feedGames.length)];
             const amount = Math.floor(Math.random() * (28000 - 950 + 1)) + 950;
             const formattedAmount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-            feedToast.textContent = `Пользователь ${user} только что выиграл ${formattedAmount} UAH в ${game}`;
+            feedToast.textContent = `Користувач ${user} щойно виграв ${formattedAmount} UAH у ${game}`;
             feedToast.classList.add("show");
 
             setTimeout(() => {

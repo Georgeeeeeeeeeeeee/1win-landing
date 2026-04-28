@@ -1,7 +1,41 @@
 @import url("style-v4.css");
 
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -15% -10%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0, 136, 204, 0.14), transparent 40%),
+        radial-gradient(circle at 75% 35%, rgba(255, 215, 0, 0.1), transparent 42%),
+        radial-gradient(circle at 55% 80%, rgba(0, 136, 204, 0.12), transparent 45%);
+    transform: translateY(calc(var(--parallax-offset, 0) * 0.35px));
+    will-change: transform;
+}
+
 .expert-card {
+    position: relative;
     transition: opacity 0.5s ease;
+    overflow: visible;
+}
+
+.expert-card::before {
+    content: "";
+    position: absolute;
+    inset: -12px;
+    z-index: -1;
+    border-radius: 14px;
+    background:
+        radial-gradient(circle at 25% 30%, rgba(0, 136, 204, 0.45), transparent 55%),
+        radial-gradient(circle at 80% 65%, rgba(255, 215, 0, 0.38), transparent 58%);
+    filter: blur(20px);
+    opacity: 0.85;
 }
 
 .expert-card.is-fading {

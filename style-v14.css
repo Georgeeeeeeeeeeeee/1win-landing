@@ -1,5 +1,9 @@
 @import url("style-v4.css");
 
+html, body {
+    min-height: 100%;
+}
+
 body {
     position: relative;
     overflow-x: hidden;
@@ -12,6 +16,28 @@ body {
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
+}
+
+/* Force seamless global background through fixed header/footer */
+.header {
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.footer {
+    background: transparent !important;
+    border-top: none !important;
+    box-shadow: none !important;
+}
+
+.logo,
+.header .btn,
+.footer-logo,
+.footer-desc {
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
 }
 
 body::before {

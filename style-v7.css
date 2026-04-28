@@ -1,9 +1,0 @@
-@import url("style-v4.css");
-
-.expert-card {
-    transition: opacity 0.5s ease;
-}
-
-.expert-card.is-fading {
-    opacity: 0.2;
-}

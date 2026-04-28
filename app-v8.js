@@ -72,20 +72,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const timerEl = document.getElementById("bonus-timer");
+    if (timerEl) {
+        let secondsLeft = 9 * 60 * 60;
+        const renderTimer = () => {
+            const hours = String(Math.floor(secondsLeft / 3600)).padStart(2, "0");
+            const minutes = String(Math.floor((secondsLeft % 3600) / 60)).padStart(2, "0");
+            const seconds = String(secondsLeft % 60).padStart(2, "0");
+            timerEl.textContent = `${hours}:${minutes}:${seconds}`;
+        };
+        renderTimer();
+        setInterval(() => {
+            if (secondsLeft > 0) {
+                secondsLeft -= 1;
+            }
+            renderTimer();
+        }, 1000);
+    }
+
     const influencers = [
-        { name: "Зубарев", text: "«На 1win все четко: зашел, активировал бонус и сразу в игру.»", img: "zubarev.jpg" },
-        { name: "Потеря", text: "«1win дает скорость, удобство и стабильный результат каждый день.»", img: "ptieria.jpg" },
-        { name: "Лебига", text: "«На 1win реально горячие бонусы. Заходишь и сразу чувствуешь драйв.»", img: "lebiha.jpg" },
-        { name: "Богачук", text: "«Точность и дисциплина решают. На 1win это работает на максимум.»", img: "bohachuk.jpg" },
-        { name: "Слобоженко", text: "«1win — мой выбор: быстрые выплаты, мощные бонусы и надежная платформа.»", img: "slobodzhenko.jpg" },
-        { name: "Беринчик", text: "«В 1win все по-бойцовски: темп, азарт и большие возможности.»", img: "berinchyk.jpg" },
-        { name: "Амосов", text: "«В спорте и на 1win побеждает тот, кто держит фокус до конца.»", img: "amosov.jpg" }
+        { name: "Зубарев", text: "«На 1win все четко: зашел, активировал бонус и сразу в игру.»", img: "zubarev.jpg", proof: "Выбор Зубарева" },
+        { name: "Потеря", text: "«1win дает скорость, удобство и стабильный результат каждый день.»", img: "ptieria.jpg", proof: "Рекомендация Потери" },
+        { name: "Лебига", text: "«На 1win реально горячие бонусы. Заходишь и сразу чувствуешь драйв.»", img: "lebiha.jpg", proof: "Рекомендация Лебиги" },
+        { name: "Богачук", text: "«Точность и дисциплина решают. На 1win это работает на максимум.»", img: "bohachuk.jpg", proof: "Выбор Богачука" },
+        { name: "Слобоженко", text: "«1win — мой выбор: быстрые выплаты, мощные бонусы и надежная платформа.»", img: "slobodzhenko.jpg", proof: "Выбор Слобоженко" },
+        { name: "Беринчик", text: "«В 1win все по-бойцовски: темп, азарт и большие возможности.»", img: "berinchyk.jpg", proof: "Рекомендация Беринчика" },
+        { name: "Амосов", text: "«В спорте и на 1win побеждает тот, кто держит фокус до конца.»", img: "amosov.jpg", proof: "Выбор Амосова" }
     ];
 
     const infCard = document.getElementById("influencer-card");
     const infImg = document.getElementById("influencer-img");
     const infName = document.getElementById("influencer-name");
     const infText = document.getElementById("influencer-text");
+    const infProof = document.getElementById("influencer-proof");
     const infDots = document.getElementById("influencer-dots");
 
     if (infCard && infImg && infName && infText) {
@@ -104,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Одна чистая функция: одновременно обновляет src, имя и цитату.
         const changeInfluencer = (nextIndex = null) => {
             if (isAnimating) {
                 return;
@@ -124,6 +142,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 infImg.alt = current.name;
                 infName.textContent = current.name;
                 infText.textContent = current.text;
+                if (infProof) {
+                    infProof.textContent = current.proof;
+                }
 
                 if (infDots) {
                     Array.from(infDots.children).forEach((dot, idx) => {
@@ -161,6 +182,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 changeInfluencer();
             }, 5000);
         }, { passive: true });
+    }
+
+    const feedToast = document.getElementById("live-feed-toast");
+    const feedUsers = ["Max_***", "LuckyGuy", "ivan_99", "DimaTop", "Oleg777", "xStorm", "NikaPlay"];
+    const feedGames = ["Aviator", "Lucky Jet", "Gates of Olympus", "Plinko", "Sweet Bonanza"];
+    if (feedToast) {
+        const showLiveToast = () => {
+            const user = feedUsers[Math.floor(Math.random() * feedUsers.length)];
+            const game = feedGames[Math.floor(Math.random() * feedGames.length)];
+            const amount = Math.floor(Math.random() * (28000 - 950 + 1)) + 950;
+            const formattedAmount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+            feedToast.textContent = `Пользователь ${user} только что выиграл ${formattedAmount} UAH в ${game}`;
+            feedToast.classList.add("show");
+
+            setTimeout(() => {
+                feedToast.classList.remove("show");
+            }, 2200);
+
+            const nextIn = (Math.floor(Math.random() * 3) + 3) * 1000;
+            setTimeout(showLiveToast, nextIn);
+        };
+
+        setTimeout(showLiveToast, 2000);
     }
 
     const liveWinsNames = [

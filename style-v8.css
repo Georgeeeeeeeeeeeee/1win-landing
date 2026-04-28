@@ -1,0 +1,125 @@
+@import url("style-v4.css");
+
+.expert-card {
+    transition: opacity 0.5s ease;
+}
+
+.expert-card.is-fading {
+    opacity: 0.2;
+}
+
+.btn-cta {
+    animation: pulse-light 1.8s infinite ease-in-out;
+}
+
+.bonus-timer-wrap {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.bonus-timer-label {
+    font-size: 13px;
+    color: #ffd166;
+    font-weight: 600;
+}
+
+.bonus-timer {
+    padding: 8px 16px;
+    border: 1px solid var(--accent-blue);
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: rgba(0, 136, 204, 0.12);
+    color: #ffffff;
+}
+
+.expert-proof {
+    margin-top: 14px;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    color: #ffe08a;
+}
+
+.why-us-section {
+    padding: 30px 0 40px;
+}
+
+.why-us-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.why-us-card {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    text-align: center;
+}
+
+.why-us-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+.why-us-card h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.why-us-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.live-feed-toast {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    max-width: 320px;
+    background: rgba(15, 22, 31, 0.95);
+    border: 1px solid rgba(63, 185, 80, 0.5);
+    color: #e6edf3;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.4;
+    z-index: 1200;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.live-feed-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+    .why-us-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .bonus-timer {
+        font-size: 18px;
+    }
+
+    .live-feed-toast {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        max-width: none;
+    }
+}

@@ -1,0 +1,6 @@
+@import url("style-v4.css");
+
+/* v6 slider animation tuning */
+.expert-card.is-fading {
+    opacity: 0.15;
+}

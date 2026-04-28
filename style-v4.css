@@ -442,8 +442,7 @@ h2.section-title {
     color: var(--text-muted);
     line-height: 1.7;
     font-size: 15px;
-    padding: 20px; 
-    /* Видалено будь-який суцільний фон і рамки за вказівкою користувача */
+    padding: 20px;
     background: transparent;
     border: none;
 }
@@ -476,7 +475,6 @@ h2.section-title {
     font-weight: 600;
 }
 
-/* Ідеальне затухання на будь-якому фоні з використанням mask-image */
 #seo-text-container {
     -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
@@ -488,7 +486,7 @@ h2.section-title {
 }
 
 #read-more-btn {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Легка тінь для солідності */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
 }
 
@@ -533,8 +531,8 @@ h2.section-title {
 }
 
 .payment-icons img {
-    height: 25px; 
-    opacity: 0.7; 
+    height: 25px;
+    opacity: 0.7;
     transition: opacity 0.3s ease;
 }
 
@@ -693,7 +691,7 @@ h2.section-title {
     }
     
     .hero-buttons .btn {
-        width: 100%; /* На мобільних розтягуємо кнопки на всю ширину для зручності */
+        width: 100%;
         max-width: 320px;
     }
     
@@ -733,7 +731,6 @@ h2.section-title {
     }
 }
 
-/* Ультра вузькі пристрої (до 480px) */
 @media (max-width: 480px) {
     .payment-icons {
         flex-wrap: nowrap;

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Анімація при скролі
     const observerOptions = {
         root: null,
         rootMargin: "0px",
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(el);
     });
 
-    // Акордеон FAQ
     document.querySelectorAll(".faq-question").forEach((item) => {
         item.addEventListener("click", () => {
             const parent = item.parentElement;
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Модальне вікно "Політика конфіденційності"
     const privacyBtn = document.getElementById("openPrivacy");
     const privacyModal = document.getElementById("privacyModal");
     const closePrivacy = document.getElementById("closePrivacy");
@@ -66,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Скрипт "Читати огляд повністю"
     const readMoreBtn = document.getElementById("read-more-btn");
     if (readMoreBtn) {
         readMoreBtn.addEventListener("click", function () {
@@ -76,43 +72,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Ротація інфлюенсерів: синхронна зміна фото/імені/цитати
     const influencers = [
-        {
-            name: "Zubarev",
-            text: "«Це просто казка, рідненькі. На 1win все чітко: зайшов, активував бонус і кайфуєш.»",
-            img: "zubarev.jpg"
-        },
-        {
-            name: "Poterya",
-            text: "«1win для мене — це швидкість рішень і стабільний результат. Все працює як треба.»",
-            img: "ptieria.jpg"
-        },
-        {
-            name: "Lebiga",
-            text: "«На 1win реально гарячі бонуси. Заходиш у гру і відчуваєш драйв з першої хвилини.»",
-            img: "lebiha.jpg"
-        },
-        {
-            name: "Bogachuk",
-            text: "«Я ціную точність і дисципліну. На 1win саме та платформа, де це приносить максимум.»",
-            img: "bohachuk.jpg"
-        },
-        {
-            name: "Слобоженко",
-            text: "«1win — мій вибір, коли потрібні швидкі виплати, сильні бонуси та надійна платформа.»",
-            img: "slobozhenko.jpg"
-        },
-        {
-            name: "Беринчик",
-            text: "«У 1win все по-бойовому: азарт, темп і великі можливості для тих, хто діє сміливо.»",
-            img: "berinchyk.jpg"
-        },
-        {
-            name: "Амосов",
-            text: "«У спорті та на 1win перемагає той, хто тримає концентрацію і не боїться йти до кінця.»",
-            img: "amosov.jpg"
-        }
+        { name: "Зубарев", text: "«На 1win все четко: зашел, активировал бонус и сразу в игру.»", img: "zubarev.jpg" },
+        { name: "Потеря", text: "«1win дает скорость, удобство и стабильный результат каждый день.»", img: "ptieria.jpg" },
+        { name: "Лебига", text: "«На 1win реально горячие бонусы. Заходишь и сразу чувствуешь драйв.»", img: "lebiha.jpg" },
+        { name: "Богачук", text: "«Точность и дисциплина решают. На 1win это работает на максимум.»", img: "bohachuk.jpg" },
+        { name: "Слобоженко", text: "«1win — мой выбор: быстрые выплаты, мощные бонусы и надежная платформа.»", img: "slobodzhenko.jpg" },
+        { name: "Беринчик", text: "«В 1win все по-бойцовски: темп, азарт и большие возможности.»", img: "berinchyk.jpg" },
+        { name: "Амосов", text: "«В спорте и на 1win побеждает тот, кто держит фокус до конца.»", img: "amosov.jpg" }
     ];
 
     const infCard = document.getElementById("influencer-card");
@@ -121,100 +88,81 @@ document.addEventListener("DOMContentLoaded", () => {
     const infText = document.getElementById("influencer-text");
     const infDots = document.getElementById("influencer-dots");
 
-    const SLIDER_INTERVAL_MS = 5000;
-    const FADE_DURATION_MS = 350;
-    let currentInfluencer = Math.floor(Math.random() * influencers.length);
-    let autoRotateTimer = null;
-    let isTransitioning = false;
-
-    const renderInfluencer = () => {
-        const data = influencers[currentInfluencer];
-        infImg.src = data.img;
-        infImg.alt = data.name;
-        infName.textContent = data.name;
-        infText.textContent = data.text;
-
-        if (infDots) {
-            Array.from(infDots.children).forEach((dot, idx) => {
-                dot.classList.toggle("active", idx === currentInfluencer);
-            });
-        }
-    };
-
-    const stopAutoRotate = () => {
-        if (autoRotateTimer !== null) {
-            clearTimeout(autoRotateTimer);
-            autoRotateTimer = null;
-        }
-    };
-
-    const scheduleNextAutoRotate = () => {
-        stopAutoRotate();
-        autoRotateTimer = setTimeout(() => {
-            switchInfluencer();
-        }, SLIDER_INTERVAL_MS);
-    };
-
-    const switchInfluencer = (nextIndex = null) => {
-        if (!infCard || isTransitioning) {
-            return;
-        }
-
-        isTransitioning = true;
-        stopAutoRotate();
-        infCard.classList.add("is-fading");
-
-        setTimeout(() => {
-            if (typeof nextIndex === "number") {
-                currentInfluencer = nextIndex;
-            } else {
-                currentInfluencer = (currentInfluencer + 1) % influencers.length;
-            }
-
-            renderInfluencer();
-            infCard.classList.remove("is-fading");
-            isTransitioning = false;
-            scheduleNextAutoRotate();
-        }, FADE_DURATION_MS);
-    };
-
     if (infCard && infImg && infName && infText) {
+        let currentIndex = Math.floor(Math.random() * influencers.length);
+        let isAnimating = false;
+
         if (infDots) {
             infDots.innerHTML = "";
             influencers.forEach((_, idx) => {
                 const dot = document.createElement("div");
                 dot.className = "influencer-dot";
                 dot.addEventListener("click", () => {
-                    if (idx !== currentInfluencer) {
-                        switchInfluencer(idx);
-                    }
+                    changeInfluencer(idx);
                 });
                 infDots.appendChild(dot);
             });
         }
 
-        renderInfluencer();
-        scheduleNextAutoRotate();
+        // Одна чистая функция: одновременно обновляет src, имя и цитату.
+        const changeInfluencer = (nextIndex = null) => {
+            if (isAnimating) {
+                return;
+            }
+            isAnimating = true;
+            infCard.classList.add("is-fading");
 
-        let touchStartX = 0;
-        let touchEndX = 0;
+            setTimeout(() => {
+                if (typeof nextIndex === "number") {
+                    currentIndex = nextIndex;
+                } else {
+                    currentIndex = (currentIndex + 1) % influencers.length;
+                }
+
+                const current = influencers[currentIndex];
+                infImg.src = current.img;
+                infImg.alt = current.name;
+                infName.textContent = current.name;
+                infText.textContent = current.text;
+
+                if (infDots) {
+                    Array.from(infDots.children).forEach((dot, idx) => {
+                        dot.classList.toggle("active", idx === currentIndex);
+                    });
+                }
+
+                infCard.classList.remove("is-fading");
+                isAnimating = false;
+            }, 250);
+        };
+
+        changeInfluencer(currentIndex);
+
+        let sliderInterval = setInterval(() => {
+            changeInfluencer();
+        }, 5000);
 
         infCard.addEventListener("touchstart", (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+            infCard.dataset.touchStartX = String(e.changedTouches[0].screenX);
         }, { passive: true });
 
         infCard.addEventListener("touchend", (e) => {
-            touchEndX = e.changedTouches[0].screenX;
+            const startX = Number(infCard.dataset.touchStartX || 0);
+            const endX = e.changedTouches[0].screenX;
 
-            if (touchEndX < touchStartX - 40) {
-                switchInfluencer((currentInfluencer + 1) % influencers.length);
-            } else if (touchEndX > touchStartX + 40) {
-                switchInfluencer((currentInfluencer - 1 + influencers.length) % influencers.length);
+            if (endX < startX - 40) {
+                changeInfluencer((currentIndex + 1) % influencers.length);
+            } else if (endX > startX + 40) {
+                changeInfluencer((currentIndex - 1 + influencers.length) % influencers.length);
             }
+
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                changeInfluencer();
+            }, 5000);
         }, { passive: true });
     }
 
-    // Динамічні виграші
     const liveWinsNames = [
         "Maks_Vip", "Olexandr_UA", "Lucky_Guy", "Vovan_77", "Krasava",
         "mister_X", "OlegUA", "Pobeditel2026", "Tanya_Win", "Ihor_Pro",

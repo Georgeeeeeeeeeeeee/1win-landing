@@ -18,19 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(el);
     });
 
-    let ticking = false;
-    const applyParallax = () => {
-        document.body.style.setProperty("--parallax-offset", String(window.scrollY));
-        ticking = false;
-    };
-    window.addEventListener("scroll", () => {
-        if (!ticking) {
-            requestAnimationFrame(applyParallax);
-            ticking = true;
-        }
-    }, { passive: true });
-    applyParallax();
-
     document.querySelectorAll(".faq-question").forEach((item) => {
         item.addEventListener("click", () => {
             const parent = item.parentElement;
